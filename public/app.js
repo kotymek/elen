@@ -41,7 +41,7 @@ function summary(){
   const share=difference!==null&&difference>=0&&s.total>0?listed/s.total*100:null;
   $('volume-bar').hidden=share===null;$('listed-bar').style.width=(share??0)+'%';
   $('share').textContent=share===null?'Brak pełnych danych do porównania.':fmt(share)+'% generacji KSE ma dostępny podział na jednostki w tej liście.';
-  $('system-note').textContent=s?.total===null||!s?'Raport zbiorczy KSE jest niedostępny lub niekompletny. Niepełnej doby nie przedstawiamy jako całkowitej produkcji.':'Łączna generacja KSE = JG + jednostki poza aktywnym udziałem w rynku bilansującym. Wiatr i PV są częścią tej sumy — nie dodajemy ich ponownie.';
+  $('system-note').textContent=s?.total===null||!s?'Raport zbiorczy KSE jest niedostępny lub niekompletny. Niepełnej doby nie przedstawiamy jako całkowitej produkcji.':'Łączna generacja KSE obejmuje generację jednostek grafikowych oraz jednostek nieuczestniczących aktywnie w rynku bilansującym. Wiatr i PV są częścią tej sumy — nie dodajemy ich ponownie.';
   $('storage').textContent=s?.storageGeneration!==null&&s?.storageGeneration!==undefined?'Magazyny oddały do sieci '+value(s.storageGeneration)+' GWh (wliczone w generację KSE) i pobrały na ładowanie '+value(s.storageCharging===null?null:Math.abs(s.storageCharging))+' GWh.':'';
 }
 async function load(){
