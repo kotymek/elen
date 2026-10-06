@@ -19,3 +19,9 @@ Raport zawiera średnią moc MW w interwałach 15 minut. Energia MWh jest sumą 
 **Zakres:** nie należy utożsamiać sumy raportu z całkowitą produkcją Polski. Publiczny raport nie zapewnia pełnego wykazu wszystkich farm PV ani innych instalacji KSE. Grupowanie wykorzystuje nazwy PSE, bloki reprezentują kody JW; filtr PV bazuje na nazwie, a nie potwierdzonym rejestrze technologii. Rozszerzenie do pełnej ewidencji wymaga dodatkowego źródła danych i mapowania jednostek.
 
 Testy: agregacja energii, rewizje, brakujące wartości, wyłączenie poboru magazynów, dni zmiany czasu i data według Warszawy.
+
+## GitHub Pages
+
+Publiczna strona: https://kotymek.github.io/elen/. Workflow `.github/workflows/pages.yml` testuje i publikuje katalog `public` po każdym pushu do domyślnej gałęzi `feat/production-dashboard`. GitHub Pages ma ustawione źródło GitHub Actions.
+
+Na stronie statycznej przeglądarka pobiera wszystkie strony raportu bezpośrednio z publicznego API PSE (CORS). Dane nie wymagają ponownego wdrożenia każdego dnia. Serwer Node pozostaje opcjonalny do lokalnego podglądu i udostępnia buforowane API opisane wyżej. Publiczny interfejs korzysta z API PSE bez bufora serwera. Awaria PSE pokazuje komunikat i przycisk ponowienia, bez sztucznych wyników.

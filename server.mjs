@@ -35,8 +35,8 @@ createServer(async(req,res)=>{
     catch(e) {if(!res.headersSent) res.writeHead(502,{'Content-Type':'application/json'});res.end(JSON.stringify({error:'Nie udało się pobrać danych PSE. Spróbuj ponownie.',detail:e.message}));}
     return;
   }
-  const files = {'/':'index.html','/app.js':'app.js','/style.css':'style.css'};
+  const files = {'/':'index.html','/app.js':'app.js','/style.css':'style.css','/data.mjs':'data.mjs','/lib.mjs':'lib.mjs'};
   if(!files[url.pathname]) {res.writeHead(404); return res.end();}
-  res.setHeader('Content-Type',url.pathname.endsWith('.js')?'text/javascript; charset=utf-8':url.pathname.endsWith('.css')?'text/css':'text/html; charset=utf-8');
+  res.setHeader('Content-Type',/\.m?js$/.test(url.pathname)?'text/javascript; charset=utf-8':url.pathname.endsWith('.css')?'text/css':'text/html; charset=utf-8');
   res.end(await readFile(new URL('./public/'+files[url.pathname],import.meta.url)));
 }).listen(Number(process.env.PORT||3000),'127.0.0.1',()=>console.log('ELEN: http://localhost:3000'));

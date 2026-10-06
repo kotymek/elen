@@ -1,3 +1,4 @@
+import {production} from './data.mjs';
 const $ = id=>document.getElementById(id), fmt = n=>new Intl.NumberFormat('pl-PL',{maximumFractionDigits:1}).format(n);
 let data,mode='plants',controller;
 const today = new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Warsaw',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
@@ -34,11 +35,11 @@ function chart(){
 async function load(){
   controller?.abort();controller=new AbortController();const current=controller;
   data=null;render();$('chart').replaceChildren();for(const id of ['energy','count','coverage'])$(id).textContent='—';$('csv').disabled=true;$('updated').textContent='';$('status').textContent='Pobieranie danych PSE…';
-  try{const response=await fetch('/api/production?date='+$('date').value,{signal:current.signal});const result=await response.json();if(!response.ok)throw new Error(result.error);data=result;
+  try{data=await production($('date').value,AbortSignal.any([current.signal,AbortSignal.timeout(120000)]));
     $('energy').textContent=fmt(data.units.reduce((s,u)=>s+u.energy,0));$('count').textContent=fmt(data.units.length);$('coverage').textContent=data.units.filter(u=>u.samples===data.expected).length+'/'+data.units.length;
     $('expected').textContent=data.expected+' interwałów na jednostkę';$('status').textContent=data.units.length?'Dane PSE · '+data.date+' · ranking obejmuje jednostki dostępne w raporcie':'PSE nie opublikowało danych dla tej doby.';
     $('updated').textContent='Pobrano: '+new Date(data.fetchedAt).toLocaleString('pl-PL',{timeZone:'Europe/Warsaw'});$('csv').disabled=!data.units.length;render();chart();
-  }catch(e){if(e.name!=='AbortError'){$('status').textContent=e.message;$('empty').hidden=false;}}
+  }catch(e){if(e.name!=='AbortError'){$('status').textContent='Nie udało się pobrać danych. '+e.message+' ';const retry=document.createElement('button');retry.textContent='Spróbuj ponownie';retry.addEventListener('click',load);$('status').append(retry);$('empty').hidden=false;}}
 }
 $('date').addEventListener('change',load);for(const id of ['search','kind'])$(id).addEventListener('input',render);
 for(const id of ['plants','units'])$(id).addEventListener('click',()=>{mode=id;$('plants').classList.toggle('active',mode==='plants');$('units').classList.toggle('active',mode==='units');render();});
