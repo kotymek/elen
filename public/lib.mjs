@@ -2,6 +2,17 @@ export function yesterday(now = new Date()) {
   const day = new Intl.DateTimeFormat('en-CA', {timeZone:'Europe/Warsaw',year:'numeric',month:'2-digit',day:'2-digit'}).format(now);
   return new Date(Date.parse(day+'T12:00:00Z')-86400000).toISOString().slice(0,10);
 }
+export function systemSummary(rows, date, expected) {
+  const latest = new Map();
+  for (const r of rows) {
+    if(r.business_date !== date) continue;
+    if(!latest.has(r.dtime_utc) || (r.publication_ts_utc||'') > (latest.get(r.dtime_utc).publication_ts_utc||'')) latest.set(r.dtime_utc,r);
+  }
+  const valid = n => n !== null && n !== undefined && n !== '' && Number.isFinite(Number(n));
+  const series = [...latest.values()].sort((a,b)=>a.dtime_utc.localeCompare(b.dtime_utc));
+  const energy = fields => series.length === expected && series.every(r=>fields.every(f=>valid(r[f]))) ? series.reduce((s,r)=>s+fields.reduce((v,f)=>v+Number(r[f]),0)/4,0) : null;
+  return {total:energy(['jg','jnwrb']),scheduled:energy(['jg']),other:energy(['jnwrb']),wind:energy(['wi']),solar:energy(['pv']),storageGeneration:energy(['jgm1','jgm2']),storageCharging:energy(['jgm']),samples:series.length,periods:series.filter(r=>valid(r.jg)&&valid(r.jnwrb)).map(r=>({utc:r.dtime_utc,label:r.period,power:Number(r.jg)+Number(r.jnwrb)}))};
+}
 export function aggregate(rows, date) {
   const unique = new Map();
   for (const r of rows) {

@@ -25,3 +25,5 @@ Testy: agregacja energii, rewizje, brakujące wartości, wyłączenie poboru mag
 Publiczna strona: https://kotymek.github.io/elen/. Workflow `.github/workflows/pages.yml` testuje i publikuje katalog `public` po każdym pushu do domyślnej gałęzi `feat/production-dashboard`. GitHub Pages ma ustawione źródło GitHub Actions.
 
 Na stronie statycznej przeglądarka pobiera wszystkie strony raportu bezpośrednio z publicznego API PSE (CORS). Dane nie wymagają ponownego wdrożenia każdego dnia. Serwer Node pozostaje opcjonalny do lokalnego podglądu i udostępnia buforowane API opisane wyżej. Publiczny interfejs korzysta z API PSE bez bufora serwera. Awaria PSE pokazuje komunikat i przycisk ponowienia, bez sztucznych wyników.
+
+Raport zbiorczy his-wlk-cal uzupełnia stronę o energię KSE (jg + jnwrb), wiatr, PV i generację/ładowanie magazynów. Wiatr/PV nie są dodawane drugi raz do sumy. Energia zbiorcza jest pokazywana tylko przy komplecie pomiarów danego pola. Różnica względem listy jednostek jest porównaniem zakresów raportów, nie identyfikacją konkretnych brakujących źródeł. Awaria raportu zbiorczego nie blokuje rankingu jednostek.
