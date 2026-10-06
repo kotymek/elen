@@ -1,4 +1,4 @@
-import {production} from './data.mjs';
+import {production} from './data.mjs?v=2';
 const $ = id=>document.getElementById(id), fmt = n=>new Intl.NumberFormat('pl-PL',{maximumFractionDigits:1}).format(n);
 let data,mode='plants',controller;
 const today = new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Warsaw',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
@@ -57,3 +57,4 @@ $('date').addEventListener('change',load);for(const id of ['search','kind'])$(id
 for(const id of ['plants','units'])$(id).addEventListener('click',()=>{mode=id;$('plants').classList.toggle('active',mode==='plants');$('units').classList.toggle('active',mode==='units');render();});
 $('csv').addEventListener('click',()=>{const cell=s=>'"'+String(s).replace(/^[=+@-]/,"'$&").replaceAll('"','""')+'"';const text='\uFEFF'+[['Elektrownia','Kod JW','Energia MWh','Interwały'],...selection().map(u=>[u.plant,u.code,u.energy,u.samples])].map(r=>r.map(cell).join(';')).join('\r\n');const url=URL.createObjectURL(new Blob([text],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='elen-'+data.date+'.csv';a.click();URL.revokeObjectURL(url);});
 load();
+

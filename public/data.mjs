@@ -1,4 +1,4 @@
-import {aggregate,systemSummary} from './lib.mjs';
+import {aggregate,systemSummary} from './lib.mjs?v=2';
 async function report(endpoint, date, signal) {
   let url = new URL('https://api.raporty.pse.pl/api/'+endpoint);
   url.searchParams.set('$filter', `business_date eq '${date}'`);
@@ -23,3 +23,4 @@ export async function production(date, signal) {
   const units = aggregate(results[0].value,date);
   return {...units,system:results[1].status === 'fulfilled' ? systemSummary(results[1].value,date,units.expected) : null,fetchedAt:new Date().toISOString()};
 }
+
