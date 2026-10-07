@@ -35,7 +35,7 @@ createServer(async(req,res)=>{
     catch(e) {if(!res.headersSent) res.writeHead(502,{'Content-Type':'application/json'});res.end(JSON.stringify({error:'Nie udało się pobrać danych PSE. Spróbuj ponownie.',detail:e.message}));}
     return;
   }
-  const files = {'/':'index.html','/app.js':'app.js','/style.css':'style.css','/data.mjs':'data.mjs','/lib.mjs':'lib.mjs'};
+  const files = {'/':'index.html','/app.js':'app.js','/style.css':'style.css','/data.mjs':'data.mjs','/lib.mjs':'lib.mjs','/explorer.mjs':'explorer.mjs','/charts.mjs':'charts.mjs','/map.mjs':'map.mjs','/poland.mjs':'poland.mjs'};
   if(!files[url.pathname]) {res.writeHead(404); return res.end();}
   res.setHeader('Content-Type',/\.m?js$/.test(url.pathname)?'text/javascript; charset=utf-8':url.pathname.endsWith('.css')?'text/css':'text/html; charset=utf-8');
   res.end(await readFile(new URL('./public/'+files[url.pathname],import.meta.url)));
