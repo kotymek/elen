@@ -3,11 +3,18 @@ import {svgNode} from './charts.mjs';
 import {fmt,groups} from './explorer.mjs';
 // Exact PSE names only; unknown names intentionally remain unmapped.
 export const locations=[
- {name:'Turów',names:['Turów'],lat:50.94583,lon:14.91472,source:'https://en.wikipedia.org/wiki/Tur%C3%B3w_Power_Station'},
- {name:'Bełchatów',names:['Bełchatów'],lat:51.26626,lon:19.32684,source:'https://www.wikidata.org/wiki/Q1546242'},
- {name:'Opole',names:['Opole'],lat:50.75182,lon:17.88196,source:'https://www.gem.wiki/Opole_power_station'},
- {name:'Kozienice',names:['Kozienice 1','Kozienice 2'],lat:51.66528,lon:21.46444,source:'https://www.wikidata.org/wiki/Q1786153'},
- {name:'Żarnowiec',names:['Żarnowiec'],lat:54.72222,lon:18.08222,source:'https://www.wikidata.org/wiki/Q1727941'}
+ {name:'Turów',names:['Turów'],lat:50.94583,lon:14.91472,source:'https://pl.wikipedia.org/wiki/Elektrownia_Tur%C3%B3w'},
+ {name:'Bełchatów',names:['Bełchatów'],lat:51.26626,lon:19.32684,source:'https://pl.wikipedia.org/wiki/Elektrownia_Be%C5%82chat%C3%B3w'},
+ {name:'Opole',names:['Opole'],lat:50.75182,lon:17.88196,source:'https://pl.wikipedia.org/wiki/Elektrownia_Opole'},
+ {name:'Kozienice',names:['Kozienice 1','Kozienice 2'],lat:51.66528,lon:21.46444,source:'https://pl.wikipedia.org/wiki/Enea_Wytwarzanie'},
+ {name:'Żarnowiec',names:['Żarnowiec'],lat:54.72222,lon:18.08222,source:'https://www.wikidata.org/wiki/Q1727941'},
+ {name:'Gryfino',names:['Gryfino'],lat:53.20592,lon:14.463452,source:'https://pl.wikipedia.org/wiki/Elektrownia_Dolna_Odra'},
+ {name:'Łaziska',names:['Łaziska 3'],lat:50.132778,lon:18.846417,source:'https://pl.wikipedia.org/wiki/Elektrownia_%C5%81aziska'},
+ {name:'Połaniec',names:['Połaniec','Połaniec 2-Pasywna'],lat:50.437364,lon:21.337103,source:'https://pl.wikipedia.org/wiki/Enea_Elektrownia_Po%C5%82aniec'},
+ {name:'Jaworzno',names:['Jaworzno 2 JWCD','Jaworzno 3'],lat:50.208611,lon:19.206667,source:'https://pl.wikipedia.org/wiki/Elektrownia_Jaworzno'},
+ {name:'Płock',names:['Płock'],lat:52.588,lon:19.678,source:'https://www.gem.wiki/Plock_power_station'},
+ {name:'Pątnów',names:['Pątnów 2'],lat:52.301111,lon:18.236111,source:'https://pl.wikipedia.org/wiki/Elektrownia_P%C4%85tn%C3%B3w'},
+ {name:'Baltic Power',names:['MFW Baltic Power'],lat:55.0501,lon:17.6501,source:'https://www.thewindpower.net/windfarm_en_24033_baltic-power.php'}
 ];
 export function drawMap(data,host,list,note,onSelect){
  host.replaceChildren();list.replaceChildren();if(!data){note.textContent='Mapa czeka na dane wybranego dnia.';return;}
