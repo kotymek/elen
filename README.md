@@ -27,3 +27,18 @@ Publiczna strona: https://kotymek.github.io/elen/. Workflow `.github/workflows/p
 Na stronie statycznej przeglądarka pobiera wszystkie strony raportu bezpośrednio z publicznego API PSE (CORS). Dane nie wymagają ponownego wdrożenia każdego dnia. Serwer Node pozostaje opcjonalny do lokalnego podglądu i udostępnia buforowane API opisane wyżej. Publiczny interfejs korzysta z API PSE bez bufora serwera. Awaria PSE pokazuje komunikat i przycisk ponowienia, bez sztucznych wyników.
 
 Raport zbiorczy his-wlk-cal uzupełnia stronę o energię KSE (jg + jnwrb), wiatr, PV i generację/ładowanie magazynów. Wiatr/PV nie są dodawane drugi raz do sumy. Energia zbiorcza jest pokazywana tylko przy komplecie pomiarów danego pola. Różnica względem listy jednostek jest porównaniem zakresów raportów, nie identyfikacją konkretnych brakujących źródeł. Awaria raportu zbiorczego nie blokuje rankingu jednostek.
+
+## Eksplorator energii
+
+- Zwięzły widok dobowy: KSE, wiatr i PV w GWh oraz podsumowanie oparte na danych.
+- Interaktywny wykres w GW z osobnymi seriami, minimum/maksimum i obsługą klawiatury (strzałki, Home, End). Linie mają przerwy przy brakujących pomiarach.
+- Porównanie z poprzednią dobą: KSE i procentowa zmiana energii tylko dla pełnych dób. Linie dopasowywane do lokalnej godziny; przy zmianie czasu powtórzony/brakujący interwał nie jest interpolowany. Doby 23/25 h są oznaczone.
+- Szczegóły elektrowni i bloków, miniwykresy oraz historia 7/30 dni. Dane historyczne są pobierane kolejno, dopiero po wybraniu zakresu. Zamknięcie panelu, zmiana zakresu lub daty anuluje pobieranie. Brak jednostki lub niepełna seria nie są zerem.
+- Pamięć podręczna w przeglądarce: 15 minut, maksymalnie 40 wpisów, bez zapisu do trwałej pamięci. Błędne odpowiedzi nie są buforowane jako sukces.
+- Data, wyszukiwanie, filtr, grupowanie i porównanie w URL. Przycisk udostępniania kopiuje ten adres, a gdy schowek jest niedostępny, wskazuje pasek adresu.
+- Mapa pięciu zweryfikowanych lokalizacji (sześć nazw PSE) z jawnym pokryciem listy. Szczegóły źródeł i rozszerzania słownika w [MAP_SOURCES.md](MAP_SOURCES.md).
+- Bez nowych zależności npm i z zachowaniem publikowania statycznego katalogu `public` na GitHub Pages.
+
+Testy `npm test` obejmują też serie jednostek, brakujące interwały, porównania
+w dniach zmiany czasu, kompletność historii, walidację adresów z datą,
+polskie formy liczebników i udziały mniejsze niż 0,1%.
