@@ -7,8 +7,7 @@ export const locations=[
  {name:'Bełchatów',names:['Bełchatów'],lat:51.26626,lon:19.32684,source:'https://www.wikidata.org/wiki/Q1546242'},
  {name:'Opole',names:['Opole'],lat:50.75182,lon:17.88196,source:'https://www.gem.wiki/Opole_power_station'},
  {name:'Kozienice',names:['Kozienice 1','Kozienice 2'],lat:51.66528,lon:21.46444,source:'https://www.wikidata.org/wiki/Q1786153'},
- {name:'Żarnowiec',names:['Żarnowiec'],lat:54.72222,lon:18.08222,source:'https://www.wikidata.org/wiki/Q1727941'},
- {name:'Gryfino',names:['Gryfino'],lat:53.20592,lon:14.463452,source:'https://pl.wikipedia.org/wiki/Elektrownia_Dolna_Odra'}
+ {name:'Żarnowiec',names:['Żarnowiec'],lat:54.72222,lon:18.08222,source:'https://www.wikidata.org/wiki/Q1727941'}
 ];
 export function drawMap(data,host,list,note,onSelect){
  host.replaceChildren();list.replaceChildren();if(!data){note.textContent='Mapa czeka na dane wybranego dnia.';return;}
