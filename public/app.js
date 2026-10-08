@@ -7,9 +7,9 @@ const $=id=>document.getElementById(id), text=(id,value)=>$(id).textContent=valu
 let data,mode='plants',controller,comparisonController,historyController,comparison,detailSelection;
 const maxDate=yesterday();
 $('date').max=maxDate;
-function readURL(){const p=new URLSearchParams(location.search);$('date').value=validDate(p.get('date'),maxDate)?p.get('date'):maxDate;$('search').value=p.get('q')||'';$('kind').value=p.get('kind')==='pv'?'pv':'all';mode=p.get('view')==='units'?'units':'plants';$('compare').checked=p.get('compare')==='1';}
-function syncURL(){const url=new URL(location.href);for(const key of ['date','q','kind','view','compare'])url.searchParams.delete(key);url.searchParams.set('date',$('date').value);if($('search').value)url.searchParams.set('q',$('search').value);if($('kind').value!=='all')url.searchParams.set('kind',$('kind').value);if(mode!=='plants')url.searchParams.set('view',mode);if($('compare').checked)url.searchParams.set('compare','1');history.replaceState(null,'',url);}
-function selection(){if(!data)return [];const query=$('search').value.toLocaleLowerCase('pl');return (mode==='plants'?groups(data.units):data.units).filter(u=>(u.plant+' '+u.code).toLocaleLowerCase('pl').includes(query)&&($('kind').value!=='pv'||/\bpv\b|fotowolta/i.test(u.plant))).sort((a,b)=>b.energy-a.energy);}
+function readURL(){const p=new URLSearchParams(location.search);$('date').value=validDate(p.get('date'),maxDate)?p.get('date'):maxDate;$('search').value=p.get('q')||'';mode=p.get('view')==='units'?'units':'plants';$('compare').checked=p.get('compare')==='1';}
+function syncURL(){const url=new URL(location.href);for(const key of ['date','q','kind','view','compare'])url.searchParams.delete(key);url.searchParams.set('date',$('date').value);if($('search').value)url.searchParams.set('q',$('search').value);if(mode!=='plants')url.searchParams.set('view',mode);if($('compare').checked)url.searchParams.set('compare','1');history.replaceState(null,'',url);}
+function selection(){if(!data)return [];const query=$('search').value.toLocaleLowerCase('pl');return (mode==='plants'?groups(data.units):data.units).filter(u=>(u.plant+' '+u.code).toLocaleLowerCase('pl').includes(query)).sort((a,b)=>b.energy-a.energy);}
 function render(){
  for(const id of ['plants','units']){$(id).classList.toggle('active',mode===id);$(id).setAttribute('aria-pressed',String(mode===id));}
  const rows=selection(),total=data?.units.reduce((s,u)=>s+u.energy,0)||0;$('rows').replaceChildren();$('empty').hidden=!data||rows.length>0;
@@ -84,7 +84,7 @@ async function loadHistory(days){
 }
 $('date').addEventListener('change',load);
 for(const [id,delta] of [['previous',-1],['next',1]])$(id).addEventListener('click',()=>{$('date').value=shiftDate($('date').value,delta);load();});
-for(const id of ['search','kind'])$(id).addEventListener('input',()=>{render();syncURL();});
+$('search').addEventListener('input',()=>{render();syncURL();});
 for(const id of ['plants','units'])$(id).addEventListener('click',()=>{mode=id;render();syncURL();});
 $('compare').addEventListener('change',()=>{syncURL();loadComparison();});
 $('share-link').addEventListener('click',async()=>{syncURL();try{await navigator.clipboard.writeText(location.href);text('share-status','Link skopiowany.');}catch{text('share-status','Skopiuj adres z paska przeglądarki.');}});
