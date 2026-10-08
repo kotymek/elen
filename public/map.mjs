@@ -14,7 +14,29 @@ export const locations=[
  {name:'Jaworzno',names:['Jaworzno 2 JWCD','Jaworzno 3'],lat:50.208611,lon:19.206667,source:'https://pl.wikipedia.org/wiki/Elektrownia_Jaworzno'},
  {name:'Płock',names:['Płock'],lat:52.588,lon:19.678,source:'https://www.gem.wiki/Plock_power_station'},
  {name:'Pątnów',names:['Pątnów 2'],lat:52.301111,lon:18.236111,source:'https://pl.wikipedia.org/wiki/Elektrownia_P%C4%85tn%C3%B3w'},
- {name:'Baltic Power',names:['MFW Baltic Power'],lat:55.0501,lon:17.6501,source:'https://www.thewindpower.net/windfarm_en_24033_baltic-power.php'}
+ {name:'Baltic Power',names:['MFW Baltic Power'],lat:55.0501,lon:17.6501,source:'https://www.thewindpower.net/windfarm_en_24033_baltic-power.php'},
+ {name:'Ostrołęka',names:['Ostrołęka B'],lat:53.104167,lon:21.613056,source:'https://pl.wikipedia.org/wiki/Energa_Elektrownie_Ostro%C5%82%C4%99ka'},
+ {name:'Rybnik',names:['Rybnik'],lat:50.133083,lon:18.526278,source:'https://pl.wikipedia.org/wiki/Elektrownia_Rybnik'},
+ {name:'EC Włocławek',names:['EC Włocławek'],lat:52.7074,lon:18.9589,source:'https://www.gem.wiki/W%C5%82oc%C5%82awek_power_station'},
+ {name:'EC Zielona Góra',names:['Zielona Góra'],lat:51.950997,lon:15.490412,source:'https://pl.wikipedia.org/wiki/Elektrociep%C5%82ownia_Zielona_G%C3%B3ra'},
+ {name:'EC Kraków Łęg',names:['Kraków Łęg'],lat:50.052917,lon:20.00525,source:'https://pl.wikipedia.org/wiki/Elektrociep%C5%82ownia_Krak%C3%B3w'},
+ {name:'EC Siekierki',names:['EC Siekierki'],lat:52.189722,lon:21.089444,source:'https://pl.wikipedia.org/wiki/Elektrociep%C5%82ownia_Siekierki'},
+ {name:'EC Wrotków',names:['EC Wrotków'],lat:51.21648,lon:22.55846,source:'https://pl.wikipedia.org/wiki/Elektrociep%C5%82ownia_Lublin-Wrotk%C3%B3w'},
+ {name:'Żarnowiec',names:['Żarnowiec'],lat:54.722222,lon:18.082222,source:'https://pl.wikipedia.org/wiki/Elektrownia_Wodna_%C5%BBarnowiec'},
+ {name:'EC Katowice',names:['Katowice'],lat:50.285611,lon:19.053528,source:'https://pl.wikipedia.org/wiki/Elektrociep%C5%82ownia_Katowice'},
+ {name:'EC Czechnica',names:['EC Czechnica-2'],lat:51.037778,lon:17.150278,source:'https://pl.wikipedia.org/wiki/Elektrociep%C5%82ownia_Czechnica'},
+ {name:'Siersza',names:['Siersza'],lat:50.206111,lon:19.4625,source:'https://pl.wikipedia.org/wiki/Elektrownia_Siersza'},
+ {name:'Skawina',names:['Skawina'],lat:49.975889,lon:19.803889,source:'https://pl.wikipedia.org/wiki/Elektrownia_Skawina'},
+ {name:'EC Wrocław',names:['Wrocław'],lat:51.12375,lon:17.025306,source:'https://pl.wikipedia.org/wiki/Elektrociep%C5%82ownia_Wroc%C5%82aw'},
+ {name:'EC Łódź',names:['EC Łódź-4'],lat:51.745556,lon:19.537778,source:'https://pl.wikipedia.org/wiki/Veolia_Energia_%C5%81%C3%B3d%C5%BA'},
+ {name:'Porąbka Żar',names:['Porąbka Żar'],lat:49.787222,lon:19.23,source:'https://pl.wikipedia.org/wiki/Elektrownia_Por%C4%85bka-%C5%BBar'},
+ {name:'EC Chorzów',names:['Chorzów'],lat:50.31,lon:18.97,source:'https://pl.wikipedia.org/wiki/Elektrociep%C5%82ownia_Chorz%C3%B3w'},
+ {name:'EC Karolin',names:['Karolin 2'],lat:52.433861,lon:16.981778,source:'https://pl.wikipedia.org/wiki/Veolia_Energia_Pozna%C5%84'},
+ {name:'PV Zwartowo',names:['Zwartowo'],lat:54.6971,lon:17.8064,source:'https://www.gem.wiki/Zwartowo_solar_farm'},
+ {name:'Łagisza',names:['Łagisza'],lat:50.349444,lon:19.1475,source:'https://pl.wikipedia.org/wiki/Elektrownia_%C5%81agisza'},
+ {name:'EC Rzeszów',names:['EC Rzeszów'],lat:50.065,lon:22.029861,source:'https://pl.wikipedia.org/wiki/Elektrociep%C5%82ownia_Rzesz%C3%B3w'},
+ {name:'EC Stalowa Wola',names:['EC Stalowa Wola'],lat:50.550439,lon:22.075967,source:'https://pl.wikipedia.org/wiki/Elektrownia_Stalowa_Wola'},
+ {name:'EC Żerań',names:['EC Żerań 2'],lat:52.294944,lon:20.993139,source:'https://pl.wikipedia.org/wiki/Elektrociep%C5%82ownia_%C5%BBera%C5%84'}
 ];
 export function drawMap(data,host,list,note,onSelect){
  host.replaceChildren();list.replaceChildren();if(!data){note.textContent='Mapa czeka na dane wybranego dnia.';return;}
