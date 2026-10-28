@@ -41,7 +41,6 @@ function summary(){
  text('unlisted',value(difference));$('volume-bar').hidden=share===null;$('listed-bar').style.width=(share??0)+'%';text('share',share===null?'Brak pełnych danych do porównania.':percent(share)+' generacji KSE ma dostępny podział na jednostki z listy.');
  text('system-note',s?.total==null?'Raport zbiorczy KSE jest niedostępny lub niekompletny. Niepełnej doby nie przedstawiamy jako całkowitej produkcji.':'Generacja KSE obejmuje jednostki grafikowe i jednostki nieuczestniczące aktywnie w rynku bilansującym. Wiatr i PV są częścią sumy — nie dodajemy ich ponownie.');
  text('storage-generation',value(s?.storageGeneration));text('storage-charging',value(s?.storageCharging==null?null:Math.abs(s.storageCharging)));
- text('storage',s?.storageGeneration!=null?'Magazyny oddały do sieci '+value(s.storageGeneration)+' GWh (wliczone w KSE). Energia ładowania: '+value(s.storageCharging==null?null:Math.abs(s.storageCharging))+' GWh.':'');
  text('count',data.units.length);text('coverage',complete+'/'+data.units.length);text('expected',data.expected+' interwałów na jednostkę');text('quality-badge',complete+'/'+data.units.length+' pełnych serii'+(s?.total==null?' · KSE niekompletne':''));text('insight',dayInsight(data));
 }
 async function loadComparison(){
@@ -53,7 +52,7 @@ async function loadComparison(){
  if(previous.expected!==data.expected)message+=' Doby mają różną długość; linie dopasowano do czasu lokalnego.';text('compare-status',message);
  }catch(e){if(!request.signal.aborted){text('compare-status','Nie udało się pobrać porównania. Wyłącz i włącz porównanie, aby ponowić.');}}
 }
-function reset(){data=null;comparison=null;render();$('detail').close();for(const id of ['chart','chart-readout','chart-legend','storage-chart','storage-readout'])$(id).replaceChildren();for(const id of ['count','coverage','total','wind','solar','listed','unlisted','storage-generation','storage-charging'])text(id,'—');$('volume-bar').hidden=true;for(const id of ['share','storage','system-note','extrema','compare-status','updated','quality-badge'])text(id,'');$('csv').disabled=true;text('insight','Przygotowujemy podsumowanie dnia…');drawMap(null,$('map'),$('map-list'),$('map-note'),openDetail);}
+function reset(){data=null;comparison=null;render();$('detail').close();for(const id of ['chart','chart-readout','chart-legend','storage-chart','storage-readout'])$(id).replaceChildren();for(const id of ['count','coverage','total','wind','solar','listed','unlisted','storage-generation','storage-charging'])text(id,'—');$('volume-bar').hidden=true;for(const id of ['share','system-note','extrema','compare-status','updated','quality-badge'])text(id,'');$('csv').disabled=true;text('insight','Przygotowujemy podsumowanie dnia…');drawMap(null,$('map'),$('map-list'),$('map-note'),openDetail);}
 async function load(){
  if(!validDate($('date').value,maxDate)){text('status','Wybierz datę od 14.06.2024 do wczoraj.');return;}
  controller?.abort();comparisonController?.abort();historyController?.abort();controller=new AbortController();const current=controller,date=$('date').value;syncURL();reset();$('previous').disabled=date==='2024-06-14';$('next').disabled=date===maxDate;text('status','Pobieranie danych PSE…');
