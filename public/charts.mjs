@@ -19,11 +19,11 @@ export function drawChart(host,{date,expected,series,readout}){
   observers.get(host)?.disconnect();host.replaceChildren();if(readout)readout.replaceChildren();
   if(!series.some(s=>s.periods.some(p=>p.power!=null))){host.textContent='Brak danych wykresu.';return;}
   const width=Math.max(300,host.clientWidth),right=width-16,span=right-44;
-  const start=dayStart(date),end=start+expected*900000,raw=Math.max(1,...series.flatMap(s=>s.periods.map(p=>p.power||0)));
-  const magnitude=10**Math.floor(Math.log10(raw/4)),step=[1,2,5,10].find(n=>n*magnitude>=raw/4)*magnitude,max=Math.ceil(raw/step)*step;
-  const x=t=>44+(t-start)/(end-start)*span,y=v=>235-v/max*207;
+  const start=dayStart(date),end=start+expected*900000;
+  const {min,max,step}=powerAxis(series.flatMap(s=>s.periods.map(p=>p.power)));
+  const x=t=>44+(t-start)/(end-start)*span,y=v=>235-(v-min)/(max-min)*207;
   const svg=svgNode('svg',{viewBox:`0 0 ${width} 280`,role:'group','aria-label':'Wykres mocy w GW, czas polski. Strzałki zmieniają interwał.',tabindex:0});
-  for(let v=0;v<=max;v+=step){svg.append(svgNode('line',{x1:44,x2:right,y1:y(v),y2:y(v),stroke:'#e4eae2'}),svgNode('text',{x:35,y:y(v)+4,'text-anchor':'end'},fmt(v/1000)));}
+  for(let v=min;v<=max+step/100;v+=step){svg.append(svgNode('line',{x1:44,x2:right,y1:y(v),y2:y(v),stroke:Math.abs(v)<step/100?'#718476':'#e4eae2','stroke-width':Math.abs(v)<step/100?1.5:1}),svgNode('text',{x:35,y:y(v)+4,'text-anchor':'end'},fmt(v/1000)));}
   for(let t=start;t<end;t+=4*3600000)svg.append(svgNode('text',{x:x(t),y:263,'text-anchor':'middle'},clock(t)));
   for(const s of series)svg.append(svgNode('path',{d:linePath(s.periods,x,y),fill:'none',stroke:s.color,'stroke-width':s.width||2.5,'stroke-dasharray':s.dash||'none'}));
   const cursor=svgNode('line',{x1:52,x2:52,y1:24,y2:235,stroke:'#577466','stroke-dasharray':'3 4',visibility:'hidden'});svg.append(cursor);host.append(svg);
@@ -37,4 +37,14 @@ export function drawChart(host,{date,expected,series,readout}){
   if(typeof ResizeObserver!=='undefined'){const observer=new ResizeObserver(()=>{if(host.clientWidth>0&&Math.abs(host.clientWidth-width)>1)drawChart(host,{date,expected,series,readout});});observers.set(host,observer);observer.observe(host);}
   svg.addEventListener('focus',()=>select(selected));
   svg.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();select(e.key==='Home'?0:e.key==='End'?expected-1:selected+(e.key==='ArrowRight'?1:-1));}});
+}
+
+// Include zero and negative charging without clipping either direction.
+export function powerAxis(values){
+ const finite=values.filter(v=>typeof v==='number'&&Number.isFinite(v));
+ const low=Math.min(0,...finite),high=Math.max(0,...finite),range=Math.max(1,high-low);
+ const magnitude=10**Math.floor(Math.log10(range/4));
+ const step=[1,2,5,10].find(n=>n*magnitude>=range/4)*magnitude;
+ const min=Math.floor(low/step)*step,max=Math.ceil(high/step)*step;
+ return {min,max:max===min?min+step:max,step};
 }
