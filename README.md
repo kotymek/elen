@@ -44,3 +44,17 @@ w dniach zmiany czasu, kompletność historii, walidację adresów z datą,
 polskie formy liczebników i udziały mniejsze niż 0,1%.
 
 Mapa nie wyświetla stałych podpisów przy punktach. Nazwa i energia pojawiają się nad mapą po wskazaniu punktu myszą lub ustawieniu na nim fokusu klawiatury. Kliknięcie/dotknięcie otwiera szczegóły; pełne nazwy pozostają również na liście obok. Dawny parametr URL `kind` jest ignorowany i usuwany z adresu.
+
+## Magazyny na wykresie
+
+Wykres dobowy obejmuje dwie niezależne serie JGm: oddawanie do sieci
+(`jgm1 + jgm2`) powyżej zera i ładowanie (`-abs(jgm)`) poniżej zera.
+Źródło i znaczenie pól: [mapowanie PSE, his-wlk-cal](https://api.raporty.pse.pl/EndpointsMap.pdf), strony 6–7.
+To zakres jednostek grafikowych magazynów raportowanych przez PSE, nie pełny
+wykaz magazynów ani pomiar stanu ich naładowania. Generacja magazynów jest już
+wliczona w KSE; serie nie są sumowane ponownie z KSE.
+
+Pod wykresem są dwie energie dobowe w GWh (tylko przy komplecie pomiarów)
+oraz rozwijane powiększenie z osobną skalą. Wykresy pokazują moc w GW,
+odczyt wskazanego interwału w MW. Brak dowolnego składnika generacji pozostaje
+przerwą; brak danych jednego kierunku nie blokuje drugiego.

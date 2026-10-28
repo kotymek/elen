@@ -11,7 +11,7 @@ export function systemSummary(rows, date, expected) {
   const valid = n => n !== null && n !== undefined && n !== '' && Number.isFinite(Number(n));
   const series = [...latest.values()].sort((a,b)=>a.dtime_utc.localeCompare(b.dtime_utc));
   const energy = fields => series.length === expected && series.every(r=>fields.every(f=>valid(r[f]))) ? series.reduce((s,r)=>s+fields.reduce((v,f)=>v+Number(r[f]),0)/4,0) : null;
-  return {total:energy(['jg','jnwrb']),scheduled:energy(['jg']),other:energy(['jnwrb']),wind:energy(['wi']),solar:energy(['pv']),storageGeneration:energy(['jgm1','jgm2']),storageCharging:energy(['jgm']),samples:series.length,periods:series.map(r=>({utc:r.dtime_utc,label:r.period,power:valid(r.jg)&&valid(r.jnwrb)?Number(r.jg)+Number(r.jnwrb):null,wind:valid(r.wi)?Number(r.wi):null,solar:valid(r.pv)?Number(r.pv):null}))};
+  return {total:energy(['jg','jnwrb']),scheduled:energy(['jg']),other:energy(['jnwrb']),wind:energy(['wi']),solar:energy(['pv']),storageGeneration:energy(['jgm1','jgm2']),storageCharging:energy(['jgm']),samples:series.length,periods:series.map(r=>({utc:r.dtime_utc,label:r.period,power:valid(r.jg)&&valid(r.jnwrb)?Number(r.jg)+Number(r.jnwrb):null,wind:valid(r.wi)?Number(r.wi):null,solar:valid(r.pv)?Number(r.pv):null,storageGeneration:valid(r.jgm1)&&valid(r.jgm2)?Number(r.jgm1)+Number(r.jgm2):null,storageCharging:valid(r.jgm)?(Number(r.jgm)===0?0:-Math.abs(Number(r.jgm))):null}))};
 }
 export function aggregate(rows, date) {
   const unique = new Map();

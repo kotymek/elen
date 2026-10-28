@@ -10,3 +10,4 @@
 @media(max-width:600px){.chart svg{min-width:0}.chart-foot>span{display:block}.chart-foot>span+span{margin-top:5px}}
 .map-readout{min-height:3.4em;margin:0 0 12px;padding:10px 12px;background:#edf2e8;border-radius:7px;font-size:13px;font-weight:600;line-height:1.5}#map [role=button]:hover circle,#map [role=button]:focus circle{stroke:#132f26;stroke-width:3;fill-opacity:1}
 .map-list{max-height:420px;overflow-y:auto;padding:4px}.map-layout{align-items:start}
+.storage-summary{display:flex;flex-wrap:wrap;gap:12px 28px;padding:16px 0 0;font-size:13px}.storage-summary>span:first-child{color:#7b4da5}.storage-summary>span:last-child{color:#a14435}.storage-detail{border-top:1px solid #e0e5db;margin-top:16px;padding-top:16px}.storage-detail summary{cursor:pointer;font-size:14px;font-weight:600}.storage-detail .chart-legend{margin-top:18px}
